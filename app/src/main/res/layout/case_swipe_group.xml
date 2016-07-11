@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <FrameLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:id="@+id/frameLayout"
+        android:background="#649fe5"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Smith"
+            android:id="@+id/tab_title"
+            android:layout_gravity="center_horizontal|bottom"
+            android:textColor="#ffffff"
+            android:textSize="24dp"
+            android:layout_marginBottom="10dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add\nNote"
+            android:id="@+id/addNoteBtn"
+            android:layout_gravity="right|bottom"
+            android:drawableRight="@drawable/plus_icon"
+            android:drawablePadding="5dp"
+            android:textColor="#ffffff"
+            android:background="#649fe5"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="3dp"
+            android:onClick="addNote"
+            android:clickable="true"
+            android:nestedScrollingEnabled="false" />
+
+    </FrameLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        >
+        <android.support.v4.view.PagerTabStrip
+            android:id="@+id/caseTabStrip"
+            android:paddingTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:textSize = "20dp"
+            android:textColor = "#649fe5"
+            />
+    </android.support.v4.view.ViewPager>
+</LinearLayout>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_cell"
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    android:elevation="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+
+        android:paddingEnd="20dp"
+        android:paddingStart="15dp"
+        android:paddingTop="20dp">
+
+        <ImageView
+            android:id="@+id/title_from_to_dots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/from_to_purple" />
+
+        <TextView
+            android:id="@+id/title_from_address"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/title_from_to_dots"
+            android:layout_marginTop="-5dp"
+            android:layout_toEndOf="@+id/title_from_to_dots"
+            android:ellipsize="marquee"
+            android:fadingEdge="horizontal"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/title_from_to_dots_divider"
+            android:layout_width="match_parent"
+
+            android:layout_height="1dp"
+            android:layout_below="@id/title_from_address"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/title_from_to_dots"
+            android:src="@color/contentDividerLine" />
+
+
+        <TextView
+            android:id="@+id/title_pledge"
+            style="@style/TitleBadgeText"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A. Smith"
+            android:id="@+id/contactName"
+            android:layout_alignTop="@+id/title_from_to_dots"
+            android:layout_alignStart="@+id/title_from_address" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lawyer"
+            android:id="@+id/contactPosition"
+            android:layout_below="@+id/title_from_to_dots_divider"
+            android:layout_toEndOf="@+id/title_from_address" />
+
+
+
+    </RelativeLayout>
+</LinearLayout>

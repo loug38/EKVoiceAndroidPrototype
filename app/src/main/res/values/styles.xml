@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Holo.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+            <!-- Main theme colors -->
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:textColorHint">@color/hintColor</item>
+        <item name="android:textColorHighlight">@color/highlight</item>
+        <item name="android:colorControlNormal">@color/highlight</item>
+        <item name="android:colorControlActivated">@color/highlight</item>
+    </style>
+
+    <style name="ContentImageBadgeTitle" parent="AppTheme">
+        <item name="android:alpha">0.5</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">12dp</item>
+    </style>
+
+    <style name="ContentImageBadgeText" parent="AppTheme">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:textStyle">bold</item>
+
+    </style>
+
+    <style name="ContentMainBadgeTitle" parent="AppTheme">
+        <item name="android:textColor">@color/contentBadgeTitle</item>
+        <item name="android:textSize">12dp</item>
+    </style>
+
+
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+    </style>
+
+    <style name="AppTheme.Login" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+    </style>
+
+    <style name="TitleBadgeText" parent="AppTheme">
+        <item name="android:textColor">@color/titleBadgeText</item>
+        <item name="android:textSize">20dp</item>
+    </style>
+
+    <style name="TitleBadgeTitle" parent="AppTheme">
+        <item name="android:textColor">@color/titleBadgeTitle</item>
+        <item name="android:textSize">12dp</item>
+    </style>
+
+</resources>

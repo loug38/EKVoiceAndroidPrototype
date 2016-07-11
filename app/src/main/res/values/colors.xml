@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#ff0fffed</color>
+    <color name="primary_dark">#ff34ccc1</color>
+    <color name="accent">#ff0fffed</color>
+    <color name="highlight">#ff208176</color>
+    <color name="hintColor">#ff50928f</color>
+    <color name="colorPrimary">#594691</color>
+    <color name="colorPrimaryDark">#3e2d70</color>
+    <color name="bgBackSideColor">#f4f0ff</color>
+    <color name="bgTitleLeft">#594691</color>
+    <color name="bgTitleRight">#ffffff</color>
+    <color name="bgContentTop">#594691</color>
+    <color name="bgContent">#ffffff</color>
+    <color name="contentDividerLine">#e0e0e0</color>
+    <color name="contentBadgeTitle">#a9a9a9</color>
+    <color name="titleBadgeTitle">#adafb1</color>
+    <color name="titleBadgeText">#adafb1</color>
+    <color name="mainTextColor">#7fcafc</color>
+    <color name="btnRequest">#ffbf12</color>
+    <color name="transparent">#00000000</color>
+    <color name="black_overlay">#66000000</color>
+</resources>

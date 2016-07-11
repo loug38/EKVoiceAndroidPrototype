@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:id="@+id/frameLayout"
+        android:background="#649fe5"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/ContentMainBadgeTitle"
+            android:text="Logout"
+            android:onClick="logoutButton"
+            android:id="@+id/logout_button"
+            android:layout_gravity= "right|bottom"
+            android:textColor="#ffffff"
+            android:background="#00ffffff"
+            android:textSize="18dp"
+            android:layout_marginRight="15dp"
+            android:layout_above="@+id/listV"
+            android:layout_alignEnd="@+id/listV" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cases"
+            style="@style/ContentMainBadgeTitle"
+            android:id="@+id/textView7"
+            android:layout_gravity="center_horizontal|bottom"
+            android:textColor="#ffffff"
+            android:textSize="24dp"
+            android:layout_marginBottom="10dp" />
+
+    </FrameLayout>
+
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/listV"
+        style="@style/ContentMainBadgeTitle"
+        android:cacheColorHint="@android:color/transparent"
+        android:paddingTop="15dp"
+        android:divider="@color/transparent"
+        android:dividerHeight="10dp"
+        android:drawSelectorOnTop="false"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:scrollingCache="true"
+        android:clipToPadding="false"/>
+
+</LinearLayout>
