@@ -108,6 +108,7 @@ public class ContactListFragment extends Fragment {
 
             if (aContact.phoneNumber != null) {
                 String formattedNumber = "";
+                
                 for (int i = 0; i < aContact.phoneNumber.length(); i++) {
                     if (i == 0) formattedNumber += "(";
                     if (i == 3) formattedNumber += ") " ;

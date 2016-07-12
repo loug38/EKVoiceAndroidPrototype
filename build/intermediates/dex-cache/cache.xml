@@ -1,12 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" >
-
-    <item
-        jar="/home/lgeorge/StudioProjects/EKVoice-Android/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        revision="23.0.2"
-        sha1="385952a8a80f109bbd2d163645a359733bb0386a">
-        <dex dex="/home/lgeorge/StudioProjects/EKVoice-Android/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_c7508588836cb8d8344de1add35825cc5eeb0498/classes.dex" />
-    </item>
-
-</items>
+<items version="2" />

@@ -145,6 +145,8 @@ public class NoteActivity extends Activity {
                     ActivityCompat.requestPermissions(NoteActivity.this,
                             new String[]{Manifest.permission.CALL_PHONE},
                             MY_PERMISSIONS_REQUEST_PHONE_CALL);
+                } else {
+                    makeCall();
                 }
             }
         });
@@ -159,13 +161,19 @@ public class NoteActivity extends Activity {
                     ActivityCompat.requestPermissions(NoteActivity.this,
                             new String[]{Manifest.permission.WRITE_CONTACTS},
                             MY_PERMISSIONS_REQUEST_WRITE_CONTACTS);
+                } else {
+                    addContact();
                 }
+
             }
         });
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        int z =0;
+        z += 1;
+        z += 2;
     }
 
     private void populateFromNote() {
@@ -268,41 +276,49 @@ public class NoteActivity extends Activity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[],
-                                           int[] grantResults){
-        switch(requestCode) {
+                                           int[] grantResults) {
+        switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_PHONE_CALL: {
                 if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    Intent callIntent = new Intent(Intent.ACTION_CALL);
-                    callIntent.setData(Uri.parse("tel:" + storedCase.phoneNumber.toString()));
-
-                    try {
-                        startActivity(callIntent);
-                    } catch (android.content.ActivityNotFoundException ex) {
-                        Toast.makeText(getApplicationContext(), "Can't make call", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(), "Must give phone call permission", Toast.LENGTH_SHORT);
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    makeCall();
+                    return;
                 }
-                return;
             }
+
             case MY_PERMISSIONS_REQUEST_WRITE_CONTACTS: {
                 if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    Intent addContactIntent = new Intent(ContactsContract.Intents.Insert.ACTION);
-                    addContactIntent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
-                    addContactIntent.putExtra(ContactsContract.Intents.Insert.PHONE, contactPhone.getText()).
-                            putExtra(ContactsContract.Intents.Insert.EMAIL, contactEmail.getText()).
-                            putExtra(ContactsContract.Intents.Insert.NAME, contactName.getText());
-                    try {
-                        startActivity(addContactIntent);
-                    } catch (android.content.ActivityNotFoundException ex) {
-                        Toast.makeText(getApplicationContext(), "Can't make call", Toast.LENGTH_SHORT);
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(), "Must give contact permission", Toast.LENGTH_SHORT);
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    addContact();
+                    return;
                 }
             }
+        }
+    }
+
+
+    private void makeCall(){
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + storedCase.phoneNumber.toString()));
+
+        try {
+            startActivity(callIntent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(getApplicationContext(), "Can't make call", Toast.LENGTH_SHORT).show();
+        }
+        return;
+    }
+
+    private void addContact(){
+        Intent addContactIntent = new Intent(ContactsContract.Intents.Insert.ACTION);
+        addContactIntent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+        addContactIntent.putExtra(ContactsContract.Intents.Insert.PHONE, contactPhone.getText()).
+                putExtra(ContactsContract.Intents.Insert.EMAIL, contactEmail.getText()).
+                putExtra(ContactsContract.Intents.Insert.NAME, contactName.getText());
+        try {
+            startActivity(addContactIntent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(getApplicationContext(), "Couldn't add contact", Toast.LENGTH_SHORT);
         }
     }
 
