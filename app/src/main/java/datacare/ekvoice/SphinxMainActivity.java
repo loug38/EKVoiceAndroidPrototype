@@ -40,15 +40,10 @@ import edu.cmu.pocketsphinx.SpeechRecognizer;
  */
 public class SphinxMainActivity extends Activity {
 
-//    private Button startSpeech, switchToSphinx;
-//    private EditText speechOutput;
-//    private SpeechRecognizer recognizer;
     Intent intent = getIntent();
     private final Activity mainHandle = this;
     private SpeechWrapper onlineSpeech = new SpeechWrapper(mainHandle);
     private String holder = "Loading Offline Mode...";
-
-//    private TextView loadingMessage;
 
     @Override
     public void onCreate(final Bundle state) {

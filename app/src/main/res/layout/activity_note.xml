@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Cancel"
-            android:id="@+id/button10"
+            android:id="@+id/addNoteCancelButton"
             android:onClick="cancelButton"
             android:layout_gravity="left|bottom"
             android:drawablePadding="5dp"
@@ -273,10 +273,24 @@
                 android:text="Offline Mode"
                 android:textColor="#4e4e4e"
                 android:id="@+id/offlineModeSwitch"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
                 android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp" />
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/addNoteEditText"
+                android:layout_marginTop="10dp" />
+
+            <Button
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Record"
+                android:textColor="#ffffff"
+                android:id="@+id/recordButton"
+                android:background="#649fe5"
+                android:layout_alignParentBottom="true"
+                android:layout_toStartOf="@+id/addNoteContactPhone"
+                android:layout_marginBottom="5dp"
+                android:layout_alignTop="@+id/offlineModeSwitch"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp" />
 
         </RelativeLayout>
     </ScrollView>

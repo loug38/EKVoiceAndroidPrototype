@@ -40,16 +40,16 @@ public class NoteActivity extends Activity {
     private Case storedCase;
     private Case.Note note;
     private Contact contact;
-    private Boolean emptyNoteWithContact = false;
     private Boolean editingNote = false;
     private EditText editBox;
-    private TextView addContactLabel;
     private TextView contactName;
     private TextView contactPhone;
     private TextView contactEmail;
     private ImageButton callButton;
     private ImageButton addContactButton;
     private Button saveButton;
+    private Button cancelButton;
+    private Button record;
     private Switch toggleOfflineMode;
     private boolean isPressed = false;
     private boolean shouldContinue = false;
@@ -79,8 +79,12 @@ public class NoteActivity extends Activity {
         callButton = (ImageButton) findViewById(R.id.addNoteCallButton);
         addContactButton = (ImageButton) findViewById(R.id.addNoteAddContact);
         saveButton = (Button) findViewById(R.id.addNoteSave);
+        cancelButton = (Button) findViewById(R.id.addNoteCancelButton);
         editBox = (EditText) findViewById(R.id.addNoteEditText);
         toggleOfflineMode = (Switch) findViewById(R.id.offlineModeSwitch);
+        record = (Button) findViewById(R.id.recordButton);
+
+        record.setVisibility(View.INVISIBLE);
 
         Intent i = getIntent();
         storedCase = (Case) i.getSerializableExtra("CASE_EXTRA");
@@ -92,7 +96,6 @@ public class NoteActivity extends Activity {
             note = (Case.Note) i.getSerializableExtra("selectedNote");
             populateFromNote();
         } else if (i.hasExtra("selectedContact")) {
-            emptyNoteWithContact = true;
             contact = (Contact) i.getSerializableExtra("selectedContact");
             populateFromContact();
         }
@@ -171,19 +174,40 @@ public class NoteActivity extends Activity {
             }
         });
 
+        cancelButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                finish();
+            }
+        });
+
+        toggleOfflineMode.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                if (toggleOfflineMode.isChecked()){
+                    record.setVisibility(View.VISIBLE);
+                } else {
+                    record.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        record.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+            }
+        });
+
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-        int z =0;
-        z += 1;
-        z += 2;
     }
 
     private void populateFromNote() {
         editBox.setText(note.noteText);
         timerValue.setText(note.hours + ":" + note.minutes + String.format("%01d", note.seconds));
 
-        //addContactLabel.setText("Change Contact");
         if (storedCase.firstName != null || storedCase.lastName != null) {
             if (storedCase.firstName != null && storedCase.lastName != null)
                 contactName.setText(storedCase.firstName + " " + storedCase.lastName);
@@ -225,7 +249,6 @@ public class NoteActivity extends Activity {
     }
 
     private void populateFromContact() {
-        addContactLabel.setText("Change Contact");
         if (contact.name != null) {
             contactName.setText(contact.name);
             contactName.setVisibility(View.VISIBLE);
@@ -273,9 +296,6 @@ public class NoteActivity extends Activity {
         }
     };
 
-    public void cancelButton(View v) {
-        finish();
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[],
