@@ -136,7 +136,7 @@
                 android:paddingRight="16dp"
                 android:layout_below="@+id/imageView4"
                 android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true" />
+                android:layout_above="@+id/offlineModeSwitch" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -266,6 +266,17 @@
                 android:layout_below="@+id/linearLayout"
                 android:layout_alignEnd="@+id/addNoteEditText"
                 android:layout_marginTop="5dp" />
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Offline Mode"
+                android:textColor="#4e4e4e"
+                android:id="@+id/offlineModeSwitch"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp" />
 
         </RelativeLayout>
     </ScrollView>

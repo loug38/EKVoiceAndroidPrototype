@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -49,6 +50,7 @@ public class NoteActivity extends Activity {
     private ImageButton callButton;
     private ImageButton addContactButton;
     private Button saveButton;
+    private Switch toggleOfflineMode;
     private boolean isPressed = false;
     private boolean shouldContinue = false;
     private final int MY_PERMISSIONS_REQUEST_PHONE_CALL = 1;
@@ -78,6 +80,7 @@ public class NoteActivity extends Activity {
         addContactButton = (ImageButton) findViewById(R.id.addNoteAddContact);
         saveButton = (Button) findViewById(R.id.addNoteSave);
         editBox = (EditText) findViewById(R.id.addNoteEditText);
+        toggleOfflineMode = (Switch) findViewById(R.id.offlineModeSwitch);
 
         Intent i = getIntent();
         storedCase = (Case) i.getSerializableExtra("CASE_EXTRA");
