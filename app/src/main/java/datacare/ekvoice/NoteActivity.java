@@ -157,8 +157,8 @@ public class NoteActivity extends Activity {
                                                       != PackageManager.PERMISSION_GRANTED){
 
                     ActivityCompat.requestPermissions(NoteActivity.this,
-                                                      new String[]{Manifest.permission.WRITE_CONTACTS},
-                                                      MY_PERMISSIONS_REQUEST_WRITE_CONTACTS);
+                            new String[]{Manifest.permission.WRITE_CONTACTS},
+                            MY_PERMISSIONS_REQUEST_WRITE_CONTACTS);
                 }
             }
         });
