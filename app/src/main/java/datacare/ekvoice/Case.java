@@ -2,7 +2,6 @@ package datacare.ekvoice;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Vector;
 
 /**
  * Created by Robin on 3/5/2016.
@@ -35,6 +34,8 @@ public class Case implements Serializable{
     public ArrayList<Note> notes;
     public static class Note implements Serializable{
         public String user;
+        public String phone;
+        public String email;
         public String date;
         public String noteText;
         public Contact contact;

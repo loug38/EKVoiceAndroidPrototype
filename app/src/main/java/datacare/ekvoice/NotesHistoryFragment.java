@@ -4,18 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 /**
@@ -54,7 +51,7 @@ public class NotesHistoryFragment extends Fragment{
                 Intent intent = new Intent(getActivity(), NoteActivity.class);
                 intent.putExtra("CASE_EXTRA", storedCase);
                 intent.putExtra("selectedNote", itemValue);
-                intent.putExtra("selectedNoteData", storedCase);
+                //intent.putExtra("selectedNoteData", storedCase);
 
                 startActivity(intent);
 

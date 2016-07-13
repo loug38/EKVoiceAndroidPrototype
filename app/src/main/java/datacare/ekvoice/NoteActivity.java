@@ -2,7 +2,6 @@ package datacare.ekvoice;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -25,41 +24,47 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+
 /**
  * This is the activity called when creating some sort of note it has three main ways of being called.
  * As a blank empty note, editing an existing note, or a new note with a contact already selected.
  */
 public class NoteActivity extends Activity {
 
-    private ToggleButton timerButton;
-    private Button stopButton;
-
+    //*********** UI Variables ***********
     private TextView timerValue;
-    private long startTime = 0L;
+    private TextView contactName;
+    private TextView contactPhone;
+    private TextView contactEmail;
+    private Button saveButton;
+    private Button cancelButton;
+    private Button record;
+    private ImageButton callButton;
+    private ImageButton addContactButton;
+    private ToggleButton timerButton;
+    private Switch toggleOfflineMode;
+    private EditText editBox;
+
+    //*********** Handlers ***********
     private Handler customHandler = new Handler();
     private Case storedCase;
     private Case.Note note;
     private Contact contact;
-    private Boolean editingNote = false;
-    private EditText editBox;
-    private TextView contactName;
-    private TextView contactPhone;
-    private TextView contactEmail;
-    private ImageButton callButton;
-    private ImageButton addContactButton;
-    private Button saveButton;
-    private Button cancelButton;
-    private Button record;
-    private Switch toggleOfflineMode;
-    private boolean isPressed = false;
+
+    //*********** Local Variables ***********
+    private long startTime = 0L;
     private boolean shouldContinue = false;
-    private final int MY_PERMISSIONS_REQUEST_PHONE_CALL = 1;
-    private final int MY_PERMISSIONS_REQUEST_WRITE_CONTACTS = 2;
+    private boolean editingNote = false;
     long timeInSeconds = 0L;
     long timeSwapBuff = 0L;
     long updatedTime = 0L;
 
-    boolean stop = true;
+    //*********** Constant Permission Variables ***********
+    private final int MY_PERMISSIONS_REQUEST_PHONE_CALL = 1;
+    private final int MY_PERMISSIONS_REQUEST_WRITE_CONTACTS = 2;
+
+
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -72,24 +77,30 @@ public class NoteActivity extends Activity {
         setContentView(R.layout.activity_note);
 
         timerValue = (TextView) findViewById(R.id.timerValue);
-        timerButton = (ToggleButton) findViewById(R.id.timerButton);
         contactName = (TextView) findViewById(R.id.addNoteContactName);
         contactPhone = (TextView) findViewById(R.id.addNoteContactPhone);
         contactEmail = (TextView) findViewById(R.id.addNoteContactEmail);
-        callButton = (ImageButton) findViewById(R.id.addNoteCallButton);
-        addContactButton = (ImageButton) findViewById(R.id.addNoteAddContact);
+        record = (Button) findViewById(R.id.recordButton);
         saveButton = (Button) findViewById(R.id.addNoteSave);
         cancelButton = (Button) findViewById(R.id.addNoteCancelButton);
+        timerButton = (ToggleButton) findViewById(R.id.timerButton);
+        callButton = (ImageButton) findViewById(R.id.addNoteCallButton);
+        addContactButton = (ImageButton) findViewById(R.id.addNoteAddContact);
         editBox = (EditText) findViewById(R.id.addNoteEditText);
         toggleOfflineMode = (Switch) findViewById(R.id.offlineModeSwitch);
-        record = (Button) findViewById(R.id.recordButton);
 
         record.setVisibility(View.INVISIBLE);
 
+        //Get case information from previous Activity
         Intent i = getIntent();
         storedCase = (Case) i.getSerializableExtra("CASE_EXTRA");
 
         editBox.setText(storedCase.firstName);
+
+        /*
+         * Check from which activity we came in from so we know from where to pull information
+         * on the case from
+         */
 
         if (i.hasExtra("selectedNote")) {
             editingNote = true;
@@ -100,23 +111,21 @@ public class NoteActivity extends Activity {
             populateFromContact();
         }
 
-
+        //Timer
         timerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                if (!isPressed) {
+                if (!shouldContinue) {
                     startTime = SystemClock.uptimeMillis();
                     customHandler.postDelayed(updateTimerThread, 0);
-                    stop = false;
                     shouldContinue = true;
-                    isPressed = true;
                 } else {
                     startTime = SystemClock.uptimeMillis();
                     shouldContinue = false;
-                    isPressed = false;
                 }
             }
         });
 
+        //If this is pressed, the new note is saved.
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,6 +135,8 @@ public class NoteActivity extends Activity {
                     note.noteText = editBox.getText().toString();
                     if (contact == null || contact != note.contact) {
                         note.contact = contact;
+                        note.email = contact.email;
+                        //HERE
                     }
                     storedCase.notes.remove(note);
                     storedCase.notes.add(note);
@@ -138,9 +149,16 @@ public class NoteActivity extends Activity {
                     storedCase.notes.add(note);
                     finish();
                 }
+
             }
         });
 
+        /*
+         * Since Android 6.0 permissions need to be asked for 1 by 1 to the user, and below we
+         * handle those permissions depending on what's needed. In this case phone and contacts.
+         * On first time use asks user for permission to access the phone, after that it calls
+         * the phone number associated with the case.
+         */
         callButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,6 +175,11 @@ public class NoteActivity extends Activity {
             }
         });
 
+        /*
+         * On first time use asks user for permission to access contacts, after that it opens up
+         * the contacts application as a new activity with the given case fields filled out.
+         * Currently fills out Phone number, Email, and name.
+         */
         addContactButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -174,6 +197,7 @@ public class NoteActivity extends Activity {
             }
         });
 
+        //Quick way to get out of app without pressing the back button.
         cancelButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -181,10 +205,16 @@ public class NoteActivity extends Activity {
             }
         });
 
+        /*
+         * Switch to toggle on pocketSphinx for offline voice recognition. All the switch does
+         * it enable the sphinx record button, like this we don't load sphinx unless completely
+         * necessary since It's a total memory hog and takes a long time to load, so don't do it
+         * unless necessary.
+         */
         toggleOfflineMode.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v){
-                if (toggleOfflineMode.isChecked()){
+            public void onClick(View v) {
+                if (toggleOfflineMode.isChecked()) {
                     record.setVisibility(View.VISIBLE);
                 } else {
                     record.setVisibility(View.INVISIBLE);
@@ -192,10 +222,17 @@ public class NoteActivity extends Activity {
             }
         });
 
+        /*
+         * The button that actually enables pocketSphinx. Currently not tied in, having serious
+         * issues with pocketSphinx dependancies
+         */
         record.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
+                if (toggleOfflineMode.isChecked()) {
+                    Toast.makeText(getApplicationContext(), "Recording", Toast.LENGTH_SHORT).show();
 
+                }
             }
         });
 
@@ -204,10 +241,15 @@ public class NoteActivity extends Activity {
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
+    /*
+     * Assuming that we went through from the note field, the fields in this activity are populated
+     * differently than if we just came in here via a new case.
+     */
     private void populateFromNote() {
         editBox.setText(note.noteText);
         timerValue.setText(note.hours + ":" + note.minutes + String.format("%01d", note.seconds));
 
+        //fill in the name field with as many names as possible or make invisible in any other case.
         if (storedCase.firstName != null || storedCase.lastName != null) {
             if (storedCase.firstName != null && storedCase.lastName != null)
                 contactName.setText(storedCase.firstName + " " + storedCase.lastName);
@@ -215,7 +257,6 @@ public class NoteActivity extends Activity {
                 contactName.setText(storedCase.firstName);
             if (storedCase.firstName == null)
                 contactName.setText(storedCase.lastName);
-
             contactName.setVisibility(View.VISIBLE);
         } else {
             contactName.setText(View.INVISIBLE);
@@ -228,6 +269,7 @@ public class NoteActivity extends Activity {
             contactEmail.setVisibility(View.INVISIBLE);
         }
 
+        //format the phone from 1234567890 to (123) 456 - 7890
         if (storedCase.phoneNumber != null) {
             String formattedPhoneNumber = "";
             for (int i = 0; i < storedCase.phoneNumber.length(); i++){
@@ -246,8 +288,14 @@ public class NoteActivity extends Activity {
             callButton.setVisibility(View.INVISIBLE);
         }
 
+
+
     }
 
+    /*
+     * Assuming we came in from the addNote button at the top, so we populate differently than
+     * coming in from an existing note.
+     */
     private void populateFromContact() {
         if (contact.name != null) {
             contactName.setText(contact.name);
@@ -266,7 +314,6 @@ public class NoteActivity extends Activity {
         if (contact.phoneNumber != null) {
             contactPhone.setText(contact.phoneNumber);
             contactPhone.setVisibility(View.VISIBLE);
-            //Needs to be implemented
             callButton.setEnabled(true);
             callButton.setVisibility(View.VISIBLE);
         } else {
@@ -276,6 +323,10 @@ public class NoteActivity extends Activity {
 
     }
 
+    /*
+     * The little time function that keeps the timer running. Checked the timing on it and it's
+     * very accurate.
+     */
     private Runnable updateTimerThread = new Runnable() {
         @Override
         public void run() {
@@ -297,6 +348,12 @@ public class NoteActivity extends Activity {
     };
 
 
+    /*
+     * Handler for all permission request. The app requires 2 so far, one to make a phonecall, and
+     * one to access the contacts. The app asks for permission when the buttons are pressed, and
+     * android returns if it got permission via this function so we check it. If it works we just
+     * call the appropriate function.
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[],
                                            int[] grantResults) {
@@ -320,18 +377,31 @@ public class NoteActivity extends Activity {
     }
 
 
+    /*
+     * Function that's called once the user gives permission, it attempts to launch the phone
+     * and dial the number in the contacts.
+     */
     private void makeCall(){
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:" + storedCase.phoneNumber.toString()));
+        if (contactPhone.getText() != "") {
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse("tel:" + contactPhone.getText()));
 
-        try {
-            startActivity(callIntent);
-        } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(getApplicationContext(), "Can't make call", Toast.LENGTH_SHORT).show();
+            try {
+                startActivity(callIntent);
+            } catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(getApplicationContext(), "Can't make call", Toast.LENGTH_SHORT).show();
+            }
+            return;
+        } else {
+            Toast.makeText(getApplicationContext(), "No phone number given for this case",
+                    Toast.LENGTH_SHORT).show();
         }
-        return;
     }
 
+    /*
+     * Function that's called once the user gives permission, it attempts to launch the contacts
+     * Activity and fill out available parameters with current case's contact information
+     */
     private void addContact(){
         Intent addContactIntent = new Intent(ContactsContract.Intents.Insert.ACTION);
         addContactIntent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
@@ -384,6 +454,4 @@ public class NoteActivity extends Activity {
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
     }
-
-
 }

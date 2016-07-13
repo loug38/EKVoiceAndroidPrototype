@@ -1,12 +1,8 @@
 package datacare.ekvoice;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -51,7 +47,7 @@ public class CaseList extends Activity {
 
     public void logoutButton(View v){
         finish();
-        startActivity(new Intent(this, LoginActivity.class));
+        //startActivity(new Intent(this, LoginActivity.class));
     }
 
 }

@@ -53,6 +53,7 @@ public class CaseDetailsAdapter extends FragmentActivity {
         });
 
     }
+
     //Tnis method will check to see if each contact has been populated by the JSON parser if the
     //contact is populated it will add it to the list of contacts to display.
     private void makeContactList(Case myCase){
